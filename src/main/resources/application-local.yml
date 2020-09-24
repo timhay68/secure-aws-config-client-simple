@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: '@ext.longName@ - LOCAL'
+  datasource:
+    username: local_sample_user
+    password: local_password123
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+secure-aws-config:
+  awsProfile: secure-config-tester
+  #  parameters:
+  #    pathBase: /sampleapi/dev
+  #    region: ap-southeast-2
+  secrets:
+    secretName: sampleapi/dev
+    region: ap-southeast-2
+
+

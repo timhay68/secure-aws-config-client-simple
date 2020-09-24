@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    # Remember: when switching between secrets and parameters, don't forget to
+    # switch the configs in application(-XXX).yml, under the secure-aws-config key.
+    #    active: prod,awsParameterConfig
+    #    active: prod,awsSecretConfig
+    #    active: local,awsParameterConfig
+    active: local,awsSecretConfig
+#    active: local

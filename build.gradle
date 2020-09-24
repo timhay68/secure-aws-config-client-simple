@@ -1,0 +1,77 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+ext {
+    longName = 'AWS Secret Parameters Annotations Test App'
+    description = 'A simple application to test the new annotations for using AWS Secrets and Parameters'
+    assetOwner = 'Tim Hay'
+    pkg = 'aws-secure-config-client'
+    groupId = 'au.com.haystacker.' + pkg
+    artifactId = pkg + '-api'
+    artifactVersion = version
+}
+
+apply plugin: 'idea'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'au.com.haystacker:secure-aws-config:2.1.0'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+/**
+ * Patches the application.yaml file with values from the build
+ */
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+
+    println "Substituting project @ext.params@ in application.yml."
+
+    with copySpec {
+        from 'src/main/resources'
+        include '**/application*.yml'
+        rootProject.ext.properties.each {
+            k, v ->
+                println "substituting ${k}:${v}"
+                filter(ReplaceTokens, tokens: [('ext.' + k): v])
+        }
+    }
+}
+bootRun.dependsOn processResources
+
+processTestResources {
+
+    println "Substituting project @ext.params@ in application.yaml."
+
+    with copySpec {
+        from 'src/test/resources'
+        include '**/application*.yml'
+        rootProject.ext.properties.each {
+            k, v ->
+                println "substituting ${k}:${v}"
+                filter(ReplaceTokens, tokens: [('ext.' + k): v])
+        }
+    }
+}
+
