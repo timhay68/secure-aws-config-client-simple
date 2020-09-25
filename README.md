@@ -10,6 +10,14 @@ Please visit this next project on Github for a more complete sample demonstratin
 as well as injection of the credentials into the Datasource and Liquibase Spring beans: 
 * [Secure AWS Config Client - Complete](https://github.com/timhay68/secure-aws-config-client)
 
+## Before you start...
+You should be comfortable with the following tasks:
+* Java application development using Spring
+* Using AWS Parameter Store to create and manage parameters.
+* Using AWS Secrets Manager to create and manage secrets.
+* Using AWS IAM to create users, credentials, groups and policies
+* Using AWS Elastic Beanstalk to create a stack to which the sample can be deployed
+
 ## Spring Profiles
 This project uses a combination of profiles to:
 1. Determine where the credentials are stored.
@@ -114,12 +122,10 @@ and not 'prod'.
 
 The following configurations will then be found in application-local.yml.  
 
-Configure `spring.datasource.jdbc-url` as required, depending on the location, type and name 
-of your database.
-
 Set `secure-aws-config.awsProfile` to the name of your AWS profile used for local development.
 This profile must represent credentials which will give the application the necessary permissions 
-to read from the AWS Parameter Store or AWS Secrets Manager, as required.
+to read from the AWS Parameter Store or AWS Secrets Manager, as required.<br>
+For the purpose of this sample, those credentials were created from an AWS IAM user named `secure-config-tester`
 
 Set `secure-aws-config.parameters.region` or `secure-aws-config.secrets.region` to the region in 
 which your account created the corresponding parameters/secrets.
