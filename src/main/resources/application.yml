@@ -4,6 +4,6 @@ spring:
     # switch the configs in application(-XXX).yml, under the secure-aws-config key.
     #    active: prod,awsParameterConfig
     #    active: prod,awsSecretConfig
-    #    active: local,awsParameterConfig
-    active: local,awsSecretConfig
+    active: local,awsParameterConfig
+    #    active: local,awsSecretConfig
 #    active: local
