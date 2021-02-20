@@ -131,9 +131,12 @@ Set `secure-aws-config.parameters.region` or `secure-aws-config.secrets.region` 
 which your account created the corresponding parameters/secrets.
 
 #### Credentials Configuration
+##### Production Environment
 In a production environment, where the application is deployed to an AWS EC2 server, secure-aws-config provides 
 a default _AwsCredentialsProvider_, which uses the EC2 server's instance profile to obtain credentials for 
-authenticating to AWS in order to access the secrets or parameters. In a local environment, specifying the 'local' 
+authenticating to AWS in order to access the secrets or parameters. 
+##### Local Environment
+In a local environment, specifying the 'local' 
 profile activates the _AWSCredentialsConfiguration_ bean defined in this project, which is able to use the AWS Profile 
 named in the `secure-aws-config.awsProfile` configuration. In this case, the default _AwsCredentialsProvider_ 'backs off'.
  
