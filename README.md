@@ -125,7 +125,9 @@ The following configurations will then be found in application-local.yml.
 Set `secure-aws-config.awsProfile` to the name of your AWS profile used for local development.
 This profile must represent credentials which will give the application the necessary permissions 
 to read from the AWS Parameter Store or AWS Secrets Manager, as required.<br>
-For the purpose of this sample, those credentials were created from an AWS IAM user named `secure-config-tester`
+For the purpose of this sample, those credentials were created from an AWS IAM user named `secure-config-tester`.
+IAM was then used to create an access key for this user, which was then stored in the local .aws/credentials file 
+under a profile named `secure-config-profile`
 
 Set `secure-aws-config.parameters.region` or `secure-aws-config.secrets.region` to the region in 
 which your account created the corresponding parameters/secrets.
