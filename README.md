@@ -127,7 +127,14 @@ This profile must represent credentials which will give the application the nece
 to read from the AWS Parameter Store or AWS Secrets Manager, as required.<br>
 For the purpose of this sample, those credentials were created from an AWS IAM user named `secure-config-tester`.
 IAM was then used to create an access key for this user, which was then stored in the local .aws/credentials file 
-under a profile named `secure-config-profile`
+under a profile named `secure-config-profile` - with a section similar to the following:
+```
+[secure-config-profile]
+aws_access_key_id=<ACCESS_KEY_ID>
+aws_secret_access_key=<SECRET_ACCESS_KEY>
+region=<REGION>
+```
+
 
 Set `secure-aws-config.parameters.region` or `secure-aws-config.secrets.region` to the region in 
 which your account created the corresponding parameters/secrets.
