@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -38,9 +40,9 @@ public class DomainControllerContractTest {
 
     @Test
     public void shouldReturnDefaultMessage() throws Exception {
-        when(service.serve()).thenReturn(DomainResponse.of("Hello World", "OK"));
+        when(service.serve()).thenReturn(DomainResponse.of(Arrays.asList("Hello", "World"), "OK"));
         this.mockMvc.perform(get("/domain")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"content\":\"Hello World\",\"code\":\"OK\"}")));
+                .andExpect(content().string(containsString("{\"content\":[\"Hello\",\"World\"],\"code\":\"OK\"}")));
     }
 
 }

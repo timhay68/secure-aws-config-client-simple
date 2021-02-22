@@ -12,10 +12,10 @@ management:
         include: '*'
 
 secure-aws-config:
-  awsProfile: secure-config-tester
-  #  parameters:
-  #    pathBase: /sampleapi/dev
-  #    region: ap-southeast-2
+  awsProfile: secure-config-profile
+  parameters:
+    pathBase: /sampleapi/dev
+    region: ap-southeast-2
   secrets:
     secretName: sampleapi/dev
     region: ap-southeast-2

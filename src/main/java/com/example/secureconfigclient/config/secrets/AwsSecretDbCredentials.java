@@ -25,7 +25,7 @@ public class AwsSecretDbCredentials {
     public AwsSecretDbCredentials() {
     }
 
-    @Bean
+    @Bean("awsSecretsCredentials")
     public DbCredentials dbCredentials() {
         return new DbCredentials(username, password);
     }
