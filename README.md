@@ -125,15 +125,27 @@ The following configurations will then be found in application-local.yml.
 Set `secure-aws-config.awsProfile` to the name of your AWS profile used for local development.
 This profile must represent credentials which will give the application the necessary permissions 
 to read from the AWS Parameter Store or AWS Secrets Manager, as required.<br>
-For the purpose of this sample, those credentials were created from an AWS IAM user named `secure-config-tester`
+For the purpose of this sample, those credentials were created from an AWS IAM user named `secure-config-tester`.
+IAM was then used to create an access key for this user, which was then stored in the local .aws/credentials file 
+under a profile named `secure-config-profile` - with a section similar to the following:
+```
+[secure-config-profile]
+aws_access_key_id=<ACCESS_KEY_ID>
+aws_secret_access_key=<SECRET_ACCESS_KEY>
+region=<REGION>
+```
+
 
 Set `secure-aws-config.parameters.region` or `secure-aws-config.secrets.region` to the region in 
 which your account created the corresponding parameters/secrets.
 
 #### Credentials Configuration
+##### Production Environment
 In a production environment, where the application is deployed to an AWS EC2 server, secure-aws-config provides 
 a default _AwsCredentialsProvider_, which uses the EC2 server's instance profile to obtain credentials for 
-authenticating to AWS in order to access the secrets or parameters. In a local environment, specifying the 'local' 
+authenticating to AWS in order to access the secrets or parameters. 
+##### Local Environment
+In a local environment, specifying the 'local' 
 profile activates the _AWSCredentialsConfiguration_ bean defined in this project, which is able to use the AWS Profile 
 named in the `secure-aws-config.awsProfile` configuration. In this case, the default _AwsCredentialsProvider_ 'backs off'.
  
