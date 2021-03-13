@@ -16,8 +16,8 @@ secure-aws-config:
   parameters:
     pathBase: /sampleapi/dev
     region: ap-southeast-2
-#  secrets:
-#    secretName: sampleapi/dev
-#    region: ap-southeast-2
+  secrets:
+    secretName: sampleapi/dev
+    region: ap-southeast-2
 
 
