@@ -1,6 +1,8 @@
 spring:
   application:
     name: '@ext.longName@'
+  profiles:
+    active: awsParameterConfig,awsSecretConfig
 
 logging:
   level:
@@ -10,7 +12,7 @@ logging:
 secure-aws-config:
   awsProfile: tim-dev
   parameters:
-    pathBase: /sampleapi/pdev
+    pathBase: /sampleapi/dev
     region: ap-southeast-2
   secrets:
     secretName: sampleapi/dev

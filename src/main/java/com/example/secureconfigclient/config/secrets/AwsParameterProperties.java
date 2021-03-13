@@ -1,6 +1,7 @@
 package com.example.secureconfigclient.config.secrets;
 
-import au.com.haystacker.secureawsconfig.secrets.annotation.AwsSecret;
+import au.com.haystacker.secureawsconfig.parameters.annotation.AwsParameter;
+import au.com.haystacker.secureawsconfig.parameters.config.EnableSecureAWSParameters;
 import au.com.haystacker.secureawsconfig.secrets.config.EnableSecureAWSSecrets;
 import com.example.secureconfigclient.config.DbCredentials;
 import org.slf4j.Logger;
@@ -9,23 +10,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-@Profile({"awsSecretConfig"})
+@Profile({"awsParameterConfig"})
 @Configuration
-@EnableSecureAWSSecrets
-public class AwsSecretDbCredentials {
+@EnableSecureAWSParameters
+public class AwsParameterProperties {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AwsSecretDbCredentials.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AwsParameterProperties.class);
 
-    @AwsSecret(secretKey = "mysql-username")
+    @AwsParameter(name = "/db/username")
     private String username;
 
-    @AwsSecret(secretKey = "mysql-password")
+    @AwsParameter(name = "/db/securepassword")
     private String password;
 
-    public AwsSecretDbCredentials() {
+    public AwsParameterProperties() {
     }
 
-    @Bean("awsSecretsCredentials")
+    @Bean("awsParameterCredentials")
     public DbCredentials dbCredentials() {
         return new DbCredentials(username, password);
     }

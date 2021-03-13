@@ -8,33 +8,41 @@ import org.springframework.context.annotation.DependsOn;
 import com.example.secureconfigclient.config.DbCredentials;
 
 import java.util.Arrays;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 @Service
-@DependsOn(value = {"awsSecretsCredentials", "awsParameterCredentials"})
 public class DomainService {
 
-    private static final String CREDENTIALS_TEMPLATE = "Your AWS %s credentials: %s   |   %s";
+    private static final String CREDENTIALS_TEMPLATE = "Your AWS %s credentials: %s | %s";
 
-    @Autowired
+    @Autowired(required = false)
     @Qualifier("awsSecretsCredentials")
     private DbCredentials awsSecretsCredentials;
 
-    @Autowired
+    @Autowired(required = false)
     @Qualifier("awsParameterCredentials")
     private DbCredentials awsParameterCredentials;
 
     public DomainResponse serve() {
-        final String awsSecretsCredentialsResponse = String.format(CREDENTIALS_TEMPLATE,
-                "Secrets Manager",
-                awsSecretsCredentials.getUsername(),
-                awsSecretsCredentials.getPassword());
+        final String awsSecretsCredentialsResponse = getCredentialsForStore("Secrets Manager", awsSecretsCredentials);
+        final String awsParameterCredentialsResponse = getCredentialsForStore("Parameter Store", awsParameterCredentials);
 
-        final String awsParameterCredentialsResponse = String.format(CREDENTIALS_TEMPLATE,
-                "Parameter Store",
-                awsParameterCredentials.getUsername(),
-                awsParameterCredentials.getPassword());
+        return DomainResponse.of(
+                Arrays.asList(awsSecretsCredentialsResponse,
+                    awsParameterCredentialsResponse
+                ),
+                "OK"
+        );
+    }
 
-        return DomainResponse.of(Arrays.asList(awsSecretsCredentialsResponse, awsParameterCredentialsResponse), "OK");
+    private String getCredentialsForStore(String storeDescription, DbCredentials credentials) {
+
+        final String username = credentials != null ? credentials.getUsername() : "Not Available";
+        final String password = credentials != null ? credentials.getPassword() : "Not Available";
+
+        return String.format(CREDENTIALS_TEMPLATE, storeDescription, username, password);
     }
 
     /**
